@@ -6,6 +6,7 @@ Canvas::Canvas(wxWindow* parent):
 {
     Bind(wxEVT_PAINT, &Canvas::onPaint, this);
     Bind(wxEVT_ERASE_BACKGROUND, &Canvas::onErase, this);
+    SetBackgroundColour(m_background_colour);
 }
 
 void Canvas::render(wxDC& dc)
@@ -15,7 +16,7 @@ void Canvas::render(wxDC& dc)
 
 void Canvas::onTimerNotify()
 {
-    std::cout << "Hello";
+    
 }
 
 void Canvas::onPaint(wxPaintEvent& e)
@@ -27,6 +28,5 @@ void Canvas::onPaint(wxPaintEvent& e)
 
 void Canvas::onErase(wxEraseEvent& e)
 {
-    SetBackgroundColour(m_background_colour);
     e.Skip();
 }
