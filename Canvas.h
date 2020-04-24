@@ -17,6 +17,5 @@ private:
 	void onErase(wxEraseEvent& e);
 
     std::vector<std::unique_ptr<Object>> m_objects;
-    size_t m_object_count;
     wxColour m_background_colour;
 };

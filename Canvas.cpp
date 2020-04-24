@@ -9,7 +9,7 @@ Canvas::Canvas(wxWindow* parent):
     SetBackgroundColour(m_background_colour);
 
     m_objects.push_back(std::unique_ptr<Object>(new Object()));
-    m_objects.push_back(std::unique_ptr<Object>(new Object(wxRealPoint(50, 50))));
+    m_objects.push_back(std::unique_ptr<Object>(new Object(wxRealPoint(120, 120))));
 }
 
 void Canvas::render(wxDC& dc)
@@ -32,7 +32,8 @@ void Canvas::moveObjects()
 {
     for (auto&& obj: m_objects)
     {
-        obj->check_border_collision(GetSize());
+        obj->checkBorderCollision(GetSize());
+        obj->checkObjectCollision(m_objects);
         obj->move();
     }
 }
