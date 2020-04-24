@@ -7,16 +7,34 @@ Canvas::Canvas(wxWindow* parent):
     Bind(wxEVT_PAINT, &Canvas::onPaint, this);
     Bind(wxEVT_ERASE_BACKGROUND, &Canvas::onErase, this);
     SetBackgroundColour(m_background_colour);
+
+    m_objects.push_back(std::unique_ptr<Object>(new Object()));
+    m_objects.push_back(std::unique_ptr<Object>(new Object(wxRealPoint(50, 50))));
 }
 
 void Canvas::render(wxDC& dc)
 {
     dc.Clear();
+    dc.SetBrush(*wxBLUE_BRUSH);
+    for (auto&& obj: m_objects)
+    {
+        dc.DrawCircle(obj->getPosition(), obj->getRadius());
+    }
 }
 
 void Canvas::onTimerNotify()
 {
-    
+    moveObjects();
+    Refresh();
+}
+
+void Canvas::moveObjects() 
+{
+    for (auto&& obj: m_objects)
+    {
+        obj->check_border_collision(GetSize());
+        obj->move();
+    }
 }
 
 void Canvas::onPaint(wxPaintEvent& e)

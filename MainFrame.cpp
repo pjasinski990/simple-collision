@@ -26,7 +26,6 @@ MainFrame::MainFrame(wxString title):
     m_stop_simulation_button->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &MainFrame::onStopButtonClicked, this);
     m_reset_simulation_button->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &MainFrame::onResetButtonClicked, this);
 
-    m_timer->start();
     Show();
 }
 
@@ -38,12 +37,12 @@ void MainFrame::onClose(wxCloseEvent& e)
 
 void MainFrame::onStartButtonClicked(wxCommandEvent& e)
 {
-    std::cout << "start" << std::endl;
+    m_timer->start();
 }
 
 void MainFrame::onStopButtonClicked(wxCommandEvent& e)
 {
-    std::cout << "stop" << std::endl;
+    m_timer->Stop();
 }
 
 void MainFrame::onResetButtonClicked(wxCommandEvent& e)

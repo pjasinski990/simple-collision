@@ -1,6 +1,7 @@
 #pragma once
 #include <wx/wx.h>
 #include <wx/timer.h>
+#include "config.h"
 #include "Canvas.h"
 
 class RenderTimer: public wxTimer
@@ -12,7 +13,7 @@ public:
     {}
 
     void Notify() override {m_canvas->onTimerNotify();}
-    void start() { wxTimer::Start(static_cast<unsigned int>(1000/m_fps));}
+    void start() { wxTimer::Start(static_cast<unsigned int>(config::ktime_step_millis));}
 
 private:
     Canvas* m_canvas;
