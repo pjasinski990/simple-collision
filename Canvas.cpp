@@ -33,8 +33,8 @@ void Canvas::generateRandomObjects(size_t n)
             rand() % static_cast<int>(this->GetSize().GetWidth()-2*config::kball_radius) + config::kball_radius, 
             rand() % static_cast<int>(GetSize().GetHeight()-2*config::kball_radius) + config::kball_radius);
         wxRealPoint random_vel(
-            static_cast<double>(rand()) / static_cast<double>(RAND_MAX), 
-            static_cast<double>(rand()) / static_cast<double>(RAND_MAX));
+            static_cast<double>(rand()) / static_cast<double>(RAND_MAX/2) - 1.0, 
+            static_cast<double>(rand()) / static_cast<double>(RAND_MAX/2) - 1.0);
 
         m_objects.push_back(std::move(Object(random_pos, random_vel)));
     }
