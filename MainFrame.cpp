@@ -50,6 +50,6 @@ void MainFrame::onResetButtonClicked(wxCommandEvent& e)
 {
     m_timer->Stop();
     m_canvas->clearObjects();
-    m_canvas->generateRandomObjects(15);
+    m_canvas->generateRandomObjects(config::kballs_count);
     m_canvas->Refresh();
 }
