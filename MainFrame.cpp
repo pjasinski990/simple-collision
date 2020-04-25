@@ -5,7 +5,7 @@ MainFrame::MainFrame(wxString title):
         m_canvas{new Canvas(this)},
         m_start_simulation_button{new wxButton(this, wxID_ANY, "Start simulation")},
         m_stop_simulation_button{new wxButton(this, wxID_ANY, "Pause simulation")},
-        m_reset_simulation_button{new wxButton(this, wxID_ANY, "Reset simulation")},
+        m_reset_simulation_button{new wxButton(this, wxID_ANY, "Generate random")},
         m_timer{new RenderTimer(m_canvas, config::kfps_max)}
 {
     // Sizers and layout
@@ -16,9 +16,10 @@ MainFrame::MainFrame(wxString title):
     bsizerMenu->Add(m_stop_simulation_button, 0, wxALIGN_CENTER);
     bsizerMenu->Add(m_reset_simulation_button, 0, wxALIGN_CENTER);
 
+    SetSizer(bsizerMain);
+
     bsizerMain->Add(m_canvas, 1, wxEXPAND);
     bsizerMain->Add(bsizerMenu, 0);
-    SetSizer(bsizerMain);
 
     // Binding event handlers
     Bind(wxEVT_CLOSE_WINDOW, &MainFrame::onClose, this);
@@ -47,5 +48,8 @@ void MainFrame::onStopButtonClicked(wxCommandEvent& e)
 
 void MainFrame::onResetButtonClicked(wxCommandEvent& e)
 {
-    std::cout << "reset" << std::endl;
+    m_timer->Stop();
+    m_canvas->clearObjects();
+    m_canvas->generateRandomObjects(15);
+    m_canvas->Refresh();
 }

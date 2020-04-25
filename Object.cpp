@@ -1,8 +1,6 @@
-#define _USE_MATH_DEFINES
 #include "Object.h"
-#include <cmath>
 
-Object::Object(const wxRealPoint& position, const wxRealPoint& velocity): // TODO same as above.
+Object::Object(const wxRealPoint& position, const wxRealPoint& velocity):
         m_position{position},
         m_velocity{velocity}
 {
@@ -67,7 +65,7 @@ void Object::checkObjectCollision(Object& o)
 
     if (distance < radius_sum)
     {
-        // Dynamic resolution, assuming equal masses 
+        // Dynamic response, assuming equal masses 
         wxRealPoint temp_v1 = m_velocity - o.m_velocity;
         wxRealPoint temp_v2 = o.m_velocity - m_velocity;
         wxRealPoint temp_pos1 = m_position - o.m_position;
@@ -81,7 +79,7 @@ void Object::checkObjectCollision(Object& o)
         o.m_velocity.x -= temp_pos2.x * (scalar2/distance/distance);
         o.m_velocity.y -= temp_pos2.y * (scalar2/distance/distance);
 
-        // Static resolution
+        // Static response
         double d = 0.5 * (distance - radius_sum);
         m_position.x -= d * (m_position.x - o.m_position.x) / distance;
         m_position.y -= d * (m_position.y - o.m_position.y) / distance;

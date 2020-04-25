@@ -8,6 +8,8 @@ class Canvas: public wxPanel
 {
 public:
     Canvas(wxWindow* parent);
+    void generateRandomObjects(size_t n);
+    void clearObjects();
     void render(wxDC& dc);
     void onTimerNotify();
 
@@ -16,6 +18,6 @@ private:
 	void onPaint(wxPaintEvent& e);
 	void onErase(wxEraseEvent& e);
 
-    std::vector<std::unique_ptr<Object>> m_objects;
+    std::vector<Object> m_objects;
     wxColour m_background_colour;
 };
