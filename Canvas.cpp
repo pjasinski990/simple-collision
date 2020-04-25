@@ -8,8 +8,11 @@ Canvas::Canvas(wxWindow* parent):
     Bind(wxEVT_ERASE_BACKGROUND, &Canvas::onErase, this);
     SetBackgroundColour(m_background_colour);
 
-    m_objects.push_back(std::unique_ptr<Object>(new Object()));
-    m_objects.push_back(std::unique_ptr<Object>(new Object(wxRealPoint(120, 120))));
+    m_objects.push_back(std::unique_ptr<Object>(new Object(wxRealPoint(120, 120), wxRealPoint(0.4, 0))));
+    m_objects.push_back(std::unique_ptr<Object>(new Object(wxRealPoint(300, 125), wxRealPoint(-0.3, 0))));
+    m_objects.push_back(std::unique_ptr<Object>(new Object(wxRealPoint(400, 150), wxRealPoint(-0.3, 0))));
+    m_objects.push_back(std::unique_ptr<Object>(new Object(wxRealPoint(100, 300), wxRealPoint(-0.3, 0))));
+    m_objects.push_back(std::unique_ptr<Object>(new Object(wxRealPoint(300, 400), wxRealPoint(-0.3, 0))));
 }
 
 void Canvas::render(wxDC& dc)
@@ -30,11 +33,15 @@ void Canvas::onTimerNotify()
 
 void Canvas::moveObjects() 
 {
-    for (auto&& obj: m_objects)
+    for (auto&& o1: m_objects)
     {
-        obj->checkBorderCollision(GetSize());
-        obj->checkObjectCollision(m_objects);
-        obj->move();
+        for (auto&& o2: m_objects)
+        {
+            if (o1.get() == o2.get()) {continue;}
+            o1->checkObjectCollision(*o2); // total brute force. TODO fix that in future?
+        }
+        o1->checkBorderCollision(GetSize());
+        o1->move();
     }
 }
 
