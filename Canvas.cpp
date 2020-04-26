@@ -1,4 +1,5 @@
 #include "Canvas.h"
+#include <ctime>
 
 Canvas::Canvas(wxWindow* parent):
         wxPanel(parent),
@@ -7,6 +8,8 @@ Canvas::Canvas(wxWindow* parent):
     Bind(wxEVT_PAINT, &Canvas::onPaint, this);
     Bind(wxEVT_ERASE_BACKGROUND, &Canvas::onErase, this);
     SetBackgroundColour(m_background_colour);
+    //TODO..?
+    srand(time(0)); // is this bad? yes. do i care? nope 
 }
 
 void Canvas::render(wxDC& dc)
