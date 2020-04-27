@@ -5,11 +5,11 @@ Canvas::Canvas(wxWindow* parent):
         wxPanel(parent),
         m_background_colour{70, 70, 70}
 {
+    SetBackgroundColour(m_background_colour);
+    srand(time(0)); // good enough.
+
     Bind(wxEVT_PAINT, &Canvas::onPaint, this);
     Bind(wxEVT_ERASE_BACKGROUND, &Canvas::onErase, this);
-    SetBackgroundColour(m_background_colour);
-    //TODO..?
-    srand(time(0)); // is this bad? yes. do i care? nope 
 }
 
 void Canvas::render(wxDC& dc)
