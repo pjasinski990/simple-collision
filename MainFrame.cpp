@@ -2,14 +2,19 @@
 
 MainFrame::MainFrame(wxString title):
         wxFrame(nullptr, wxID_ANY, title),
+        m_main_panel{new wxPanel(this)},
         m_canvas{new Canvas(this)},
         m_start_simulation_button{new wxButton(this, wxID_ANY, "Start simulation")},
         m_stop_simulation_button{new wxButton(this, wxID_ANY, "Pause simulation")},
         m_reset_simulation_button{new wxButton(this, wxID_ANY, "Generate random")},
         m_timer{new RenderTimer(m_canvas, config::kfps_max)}
 {
-    // Sizers and layout
-    wxBoxSizer* bsizerMain = new wxBoxSizer(wxHORIZONTAL);
+    wxBoxSizer* bsizer_frame = new wxBoxSizer(wxVERTICAL);
+    wxBoxSizer* bsizer_main = new wxBoxSizer(wxVERTICAL);
+    bsizer_frame->Add(m_main_panel, 1, wxEXPAND);
+    m_main_panel->SetSizer(bsizer_main);
+
+    /*
     wxBoxSizer* bsizerMenu = new wxBoxSizer(wxVERTICAL);
 
     bsizerMenu->Add(m_start_simulation_button, 0, wxALIGN_CENTER);
@@ -26,8 +31,7 @@ MainFrame::MainFrame(wxString title):
     m_start_simulation_button->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &MainFrame::onStartButtonClicked, this);
     m_stop_simulation_button->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &MainFrame::onStopButtonClicked, this);
     m_reset_simulation_button->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &MainFrame::onResetButtonClicked, this);
-
-    Show();
+    */
 }
 
 void MainFrame::onClose(wxCloseEvent& e)

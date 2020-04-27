@@ -2,6 +2,7 @@
 #include <wx/wx.h>
 #include "config.h"
 #include "Canvas.h"
+#include "MenuPanel.h"
 #include "RenderTimer.h"
 
 class MainFrame: public wxFrame 
@@ -11,6 +12,8 @@ public:
     Canvas* getCanvas() {return m_canvas;}
 
 private:
+    wxPanel* m_main_panel;
+    MenuPanel* m_menu_panel;
 	Canvas* m_canvas;
     wxButton* m_start_simulation_button;
     wxButton* m_stop_simulation_button;

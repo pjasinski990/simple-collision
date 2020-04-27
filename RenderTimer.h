@@ -16,6 +16,6 @@ public:
     void start() { wxTimer::Start(static_cast<unsigned int>(config::ktime_step_millis));}
 
 private:
-    Canvas* m_canvas;
+    std::shared_ptr<Canvas> m_canvas;
     unsigned int m_fps;
 };
