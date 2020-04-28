@@ -19,6 +19,23 @@ void Object::move()
     } 
 } 
 
+void Object::draw(wxDC& dc)
+{
+    dc.SetBrush(wxBrush(m_colour));
+    dc.SetPen(wxPen(m_colour.ChangeLightness(50), 3));
+    dc.DrawCircle(getPosition(), getRadius());
+}
+
+void Object::drawArrow(wxDC& dc)
+{
+    dc.SetPen(wxPen(*wxRED, 2));
+    dc.SetBrush(wxBrush(*wxRED));
+    double vel = sqrt(getVelocity().x*getVelocity().x + getVelocity().y*getVelocity().y);
+    wxRealPoint norm(getVelocity().x / vel, getVelocity().y/vel);
+
+    dc.DrawLine(getPosition()+norm*m_radius, getPosition() + norm*m_radius + getVelocity()*50.0);
+}
+
 void Object::checkBorderCollision(const wxSize& canvas_size)
 {
     if (m_velocity.x > 0)

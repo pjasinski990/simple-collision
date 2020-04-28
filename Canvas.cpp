@@ -15,12 +15,13 @@ Canvas::Canvas(wxWindow* parent):
 void Canvas::render(wxDC& dc)
 {
     dc.Clear();
-    dc.SetBrush(*wxBLUE_BRUSH);
     for (auto&& obj: m_objects)
     {
-        dc.DrawCircle(obj->getPosition(), obj->getRadius());
+        obj->draw(dc);
+        obj->drawArrow(dc);
     }
 }
+
 
 void Canvas::onTimerNotify()
 {

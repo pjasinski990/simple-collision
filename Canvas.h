@@ -14,6 +14,7 @@ public:
     void onTimerNotify();
 
 private:
+    bool m_draw_arrows = false;
     void moveObjects();
 	void onPaint(wxPaintEvent& e);
 	void onErase(wxEraseEvent& e);
