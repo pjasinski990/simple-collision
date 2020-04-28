@@ -18,10 +18,9 @@ void Canvas::render(wxDC& dc)
     for (auto&& obj: m_objects)
     {
         obj->draw(dc);
-        obj->drawArrow(dc);
+        if (m_draw_arrows) {obj->drawArrow(dc);}
     }
 }
-
 
 void Canvas::onTimerNotify()
 {
