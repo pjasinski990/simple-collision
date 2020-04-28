@@ -6,7 +6,7 @@ Canvas::Canvas(wxWindow* parent):
         m_background_colour{70, 70, 70}
 {
     SetBackgroundColour(m_background_colour);
-    srand(time(0)); // good enough.
+    srand(time(0)); // good enough
 
     Bind(wxEVT_PAINT, &Canvas::onPaint, this);
     Bind(wxEVT_ERASE_BACKGROUND, &Canvas::onErase, this);
@@ -18,7 +18,7 @@ void Canvas::render(wxDC& dc)
     dc.SetBrush(*wxBLUE_BRUSH);
     for (auto&& obj: m_objects)
     {
-        dc.DrawCircle(obj.getPosition(), obj.getRadius());
+        dc.DrawCircle(obj->getPosition(), obj->getRadius());
     }
 }
 
@@ -39,7 +39,7 @@ void Canvas::generateRandomObjects(size_t n)
             static_cast<double>(rand()) / static_cast<double>(RAND_MAX/2) - 1.0, 
             static_cast<double>(rand()) / static_cast<double>(RAND_MAX/2) - 1.0);
 
-        m_objects.push_back(std::move(Object(random_pos, random_vel)));
+        m_objects.push_back(std::unique_ptr<Object>(new Object(random_pos, random_vel)));
     }
 }
 
@@ -54,10 +54,10 @@ void Canvas::moveObjects()
     {
         for (auto&& o2: m_objects)
         {
-            if (&o1 != &o2) {o1.checkObjectCollision(o2);} // total brute force. TODO fix that in future?
+            if (&o1 != &o2) {o1->checkObjectCollision(*o2);} // total brute force. TODO fix that in future?
         }
-        o1.checkBorderCollision(GetSize());
-        o1.move();
+        o1->checkBorderCollision(GetSize());
+        o1->move();
     }
 }
 

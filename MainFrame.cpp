@@ -21,17 +21,16 @@ MainFrame::MainFrame(wxString title):
     bsizer_menu->Add(m_stop_simulation_button, 0, wxALIGN_CENTER | wxLEFT | wxRIGHT, 5);
     bsizer_menu->Add(m_reset_simulation_button, 0, wxALIGN_CENTER | wxLEFT | wxRIGHT, 5);
 
-    Bind(wxEVT_CLOSE_WINDOW, &MainFrame::onClose, this);
     m_start_simulation_button->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &MainFrame::onStartButtonClicked, this);
     m_stop_simulation_button->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &MainFrame::onStopButtonClicked, this);
     m_reset_simulation_button->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &MainFrame::onResetButtonClicked, this);
 }
 
-void MainFrame::onClose(wxCloseEvent& e)
+MainFrame::~MainFrame()
 {
-    m_timer->Stop();
-    Close();
-    e.Skip();
+    m_start_simulation_button->Unbind(wxEVT_COMMAND_BUTTON_CLICKED, &MainFrame::onStartButtonClicked, this);
+    m_stop_simulation_button->Unbind(wxEVT_COMMAND_BUTTON_CLICKED, &MainFrame::onStopButtonClicked, this);
+    m_reset_simulation_button->Unbind(wxEVT_COMMAND_BUTTON_CLICKED, &MainFrame::onResetButtonClicked, this);
 }
 
 void MainFrame::onStartButtonClicked(wxCommandEvent& e)

@@ -10,5 +10,4 @@ public:
 
 private:
     MainFrame* m_main_frame;
-
 };

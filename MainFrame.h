@@ -8,7 +8,7 @@ class MainFrame: public wxFrame
 {
 public:
 	MainFrame(wxString title);
-    Canvas* getCanvas() {return m_canvas;}
+    ~MainFrame();
 
 private:
     wxPanel* m_main_panel;
@@ -19,7 +19,6 @@ private:
     wxButton* m_reset_simulation_button;
     RenderTimer* m_timer;
 
-    void onClose(wxCloseEvent& e);
     void onStartButtonClicked(wxCommandEvent& e);
     void onStopButtonClicked(wxCommandEvent& e);
     void onResetButtonClicked(wxCommandEvent& e);

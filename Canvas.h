@@ -18,6 +18,6 @@ private:
 	void onPaint(wxPaintEvent& e);
 	void onErase(wxEraseEvent& e);
 
-    std::vector<Object> m_objects;
+    std::vector<std::unique_ptr<Object>> m_objects;
     wxColour m_background_colour;
 };
