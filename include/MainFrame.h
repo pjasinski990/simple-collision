@@ -17,9 +17,11 @@ private:
     wxButton* m_start_simulation_button;
     wxButton* m_stop_simulation_button;
     wxButton* m_reset_simulation_button;
+    wxCheckBox* m_show_arrows_checkbox;
     RenderTimer* m_timer;
 
     void onStartButtonClicked(wxCommandEvent& e);
     void onStopButtonClicked(wxCommandEvent& e);
     void onResetButtonClicked(wxCommandEvent& e);
+    void onCheckBoxChecked(wxCommandEvent& e);
 };

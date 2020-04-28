@@ -8,6 +8,7 @@ class Canvas: public wxPanel
 {
 public:
     Canvas(wxWindow* parent);
+    void setDrawArrows(bool flag);
     void generateRandomObjects(size_t n);
     void clearObjects();
     void render(wxDC& dc);

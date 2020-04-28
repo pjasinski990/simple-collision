@@ -8,6 +8,7 @@ MainFrame::MainFrame(wxString title):
         m_start_simulation_button{new wxButton(m_menu_panel, wxID_ANY, "Start simulation")},
         m_stop_simulation_button{new wxButton(m_menu_panel, wxID_ANY, "Pause simulation")},
         m_reset_simulation_button{new wxButton(m_menu_panel, wxID_ANY, "Generate random")},
+        m_show_arrows_checkbox{new wxCheckBox(m_menu_panel, wxID_ANY, "Show velocity")},
         m_timer{new RenderTimer(m_canvas, config::kfps_max)}
 {
     wxBoxSizer* bsizer_main = new wxBoxSizer(wxHORIZONTAL);
@@ -20,10 +21,12 @@ MainFrame::MainFrame(wxString title):
     bsizer_menu->Add(m_start_simulation_button, 0, wxALIGN_CENTER | wxLEFT | wxRIGHT, 5);
     bsizer_menu->Add(m_stop_simulation_button, 0, wxALIGN_CENTER | wxLEFT | wxRIGHT, 5);
     bsizer_menu->Add(m_reset_simulation_button, 0, wxALIGN_CENTER | wxLEFT | wxRIGHT, 5);
+    bsizer_menu->Add(m_show_arrows_checkbox, 0, wxALIGN_CENTER | wxLEFT | wxRIGHT, 5);
 
     m_start_simulation_button->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &MainFrame::onStartButtonClicked, this);
     m_stop_simulation_button->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &MainFrame::onStopButtonClicked, this);
     m_reset_simulation_button->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &MainFrame::onResetButtonClicked, this);
+    m_show_arrows_checkbox->Bind(wxEVT_CHECKBOX, &MainFrame::onCheckBoxChecked, this);
 }
 
 MainFrame::~MainFrame()
@@ -31,6 +34,7 @@ MainFrame::~MainFrame()
     m_start_simulation_button->Unbind(wxEVT_COMMAND_BUTTON_CLICKED, &MainFrame::onStartButtonClicked, this);
     m_stop_simulation_button->Unbind(wxEVT_COMMAND_BUTTON_CLICKED, &MainFrame::onStopButtonClicked, this);
     m_reset_simulation_button->Unbind(wxEVT_COMMAND_BUTTON_CLICKED, &MainFrame::onResetButtonClicked, this);
+    m_show_arrows_checkbox->Unbind(wxEVT_CHECKBOX, &MainFrame::onCheckBoxChecked, this);
 }
 
 void MainFrame::onStartButtonClicked(wxCommandEvent& e)
@@ -49,4 +53,10 @@ void MainFrame::onResetButtonClicked(wxCommandEvent& e)
     m_canvas->clearObjects();
     m_canvas->generateRandomObjects(config::kballs_count);
     m_canvas->Refresh();
+}
+
+void MainFrame::onCheckBoxChecked(wxCommandEvent& e)
+{
+    if (m_show_arrows_checkbox->IsChecked()) {m_canvas->setDrawArrows(true);}
+    else {m_canvas->setDrawArrows(false);}
 }

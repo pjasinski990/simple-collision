@@ -12,6 +12,12 @@ Canvas::Canvas(wxWindow* parent):
     Bind(wxEVT_ERASE_BACKGROUND, &Canvas::onErase, this);
 }
 
+void Canvas::setDrawArrows(bool flag)
+{
+    m_draw_arrows = flag;
+    Refresh();
+}
+
 void Canvas::render(wxDC& dc)
 {
     dc.Clear();
