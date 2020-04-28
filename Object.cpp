@@ -1,5 +1,12 @@
 #include "Object.h"
 
+wxPoint rotate(const wxPoint& p, double phi)
+{
+    double xp = cos(phi)*p.x - sin(phi)*p.y;
+    double yp = sin(phi)*p.x + cos(phi)*p.y;
+    return wxPoint(xp, yp);
+}
+
 Object::Object(const wxRealPoint& position, const wxRealPoint& velocity):
         m_position{position},
         m_velocity{velocity}
@@ -22,7 +29,7 @@ void Object::move()
 void Object::draw(wxDC& dc)
 {
     dc.SetBrush(wxBrush(m_colour));
-    dc.SetPen(wxPen(m_colour.ChangeLightness(50), 3));
+    dc.SetPen(wxPen(m_colour));
     dc.DrawCircle(getPosition(), getRadius());
 }
 
@@ -30,10 +37,23 @@ void Object::drawArrow(wxDC& dc)
 {
     dc.SetPen(wxPen(*wxRED, 2));
     dc.SetBrush(wxBrush(*wxRED));
+
     double vel = sqrt(getVelocity().x*getVelocity().x + getVelocity().y*getVelocity().y);
     wxRealPoint norm(getVelocity().x / vel, getVelocity().y/vel);
 
-    dc.DrawLine(getPosition()+norm*m_radius, getPosition() + norm*m_radius + getVelocity()*50.0);
+    wxPointList triangle;
+    double phi = atan2(getVelocity().y, getVelocity().x);
+
+    wxPoint p1(rotate(wxPoint(-4, -3), phi));
+    wxPoint p2(rotate(wxPoint(4, 0), phi));
+    wxPoint p3(rotate(wxPoint(-4, 3), phi));
+    triangle.Append(&p1);
+    triangle.Append(&p2);
+    triangle.Append(&p3);
+
+    wxPoint line_end(getPosition() + norm*m_radius + getVelocity()*config::karrowlength_scaling_factor);
+    dc.DrawLine(getPosition()+norm*m_radius, line_end);
+    dc.DrawPolygon(&triangle, line_end.x, line_end.y);
 }
 
 void Object::checkBorderCollision(const wxSize& canvas_size)
