@@ -12,6 +12,7 @@ public:
     void generateRandomObjects(size_t n);
     void clearObjects();
     void render(wxDC& dc);
+    double getTotalEnergy() const;
     void onTimerNotify();
 
 private:

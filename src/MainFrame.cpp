@@ -11,6 +11,7 @@ MainFrame::MainFrame(wxString title):
         m_show_arrows_checkbox{new wxCheckBox(m_menu_panel, wxID_ANY, "Show velocity")},
         m_timer{new RenderTimer(m_canvas, config::kfps_max)}
 {
+
     wxBoxSizer* bsizer_main = new wxBoxSizer(wxHORIZONTAL);
     m_main_panel->SetSizer(bsizer_main);
     bsizer_main->Add(m_canvas, 1, wxEXPAND);

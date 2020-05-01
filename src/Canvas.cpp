@@ -1,4 +1,5 @@
 #include "Canvas.h"
+#include <iomanip>
 #include <ctime>
 
 Canvas::Canvas(wxWindow* parent):
@@ -25,6 +26,19 @@ void Canvas::render(wxDC& dc)
     {
         obj->draw(dc);
         if (m_draw_arrows) {obj->drawArrow(dc);}
+    }
+    std::ostringstream ss;
+    ss << "Total kinetic energy: " << std::fixed << std::setprecision(config::kenergy_precision) << getTotalEnergy();
+    dc.DrawText(ss.str(), wxPoint(10, 10));
+}
+
+double Canvas::getTotalEnergy() const 
+{
+    double energy = 0.0;
+    for (auto&& obj: m_objects)
+    {
+        // Assuming masses of 1kg and speed in m/s
+        energy += (obj->getVelocity().x*obj->getVelocity().x + obj->getVelocity().y*obj->getVelocity().y) / 2;
     }
 }
 
@@ -70,6 +84,7 @@ void Canvas::moveObjects()
 void Canvas::onPaint(wxPaintEvent& e)
 {
     wxPaintDC dc(this);
+    dc.SetTextForeground(*wxWHITE);
     render(dc);
     e.Skip();
 }
