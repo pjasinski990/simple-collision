@@ -40,6 +40,7 @@ double Canvas::getTotalEnergy() const
         // Assuming masses of 1kg and speed in m/s
         energy += (obj->getVelocity().x*obj->getVelocity().x + obj->getVelocity().y*obj->getVelocity().y) / 2;
     }
+    return energy;
 }
 
 void Canvas::onTimerNotify()
@@ -74,7 +75,7 @@ void Canvas::moveObjects()
     {
         for (auto&& o2: m_objects)
         {
-            if (&o1 != &o2) {o1->checkObjectCollision(*o2);} // total brute force. TODO fix that in future?
+            if (&o1 != &o2) {o1->checkObjectCollision(*o2);}
         }
         o1->checkBorderCollision(GetSize());
         o1->move();
